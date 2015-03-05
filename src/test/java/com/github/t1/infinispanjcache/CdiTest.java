@@ -22,7 +22,7 @@ import com.github.t1.log.LoggingInterceptor;
 @AdditionalPackages({ AdvancedCacheProducer.class })
 public class CdiTest {
     @Inject
-    CacheConfigLoader config;
+    CacheConfigLoader configLoader; // startup
 
     @Inject
     TestResource resource;

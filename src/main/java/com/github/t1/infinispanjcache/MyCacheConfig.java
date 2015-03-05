@@ -9,6 +9,8 @@ import javax.cache.event.*;
 import javax.cache.expiry.*;
 
 public class MyCacheConfig extends CacheConfig<Object, Object> {
+    private static final long serialVersionUID = 1L;
+
     private static class SerializableCacheEntryListener<K, V> implements CacheEntryExpiredListener<K, V>, Serializable {
         private static final long serialVersionUID = 1L;
 
