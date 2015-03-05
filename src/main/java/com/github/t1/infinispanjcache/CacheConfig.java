@@ -1,68 +1,69 @@
 package com.github.t1.infinispanjcache;
 
-import static java.util.concurrent.TimeUnit.*;
-
-import java.io.Serializable;
-
-import javax.annotation.PostConstruct;
-import javax.cache.*;
 import javax.cache.configuration.*;
-import javax.cache.event.*;
-import javax.cache.expiry.*;
-import javax.ejb.*;
-import javax.inject.Inject;
+import javax.cache.expiry.ExpiryPolicy;
+import javax.cache.integration.*;
 
-@Startup
-@Singleton
-public class CacheConfig {
-    private static class SerializableCacheEntryListener<K, V> implements CacheEntryExpiredListener<K, V>, Serializable {
-        private static final long serialVersionUID = 1L;
+public class CacheConfig<K, V> {
+    private final String cacheName;
+    private final MutableConfiguration<K, V> config = new MutableConfiguration<>();
 
-        @Override
-        public void onExpired(Iterable<CacheEntryEvent<? extends K, ? extends V>> events)
-                throws CacheEntryListenerException {
-            for (CacheEntryEvent<? extends K, ? extends V> event : events) {
-                System.out.println("expired value [" + event.getValue() + "] from " + event.getSource().getName());
-            }
-        }
+    public CacheConfig(String cacheName) {
+        this.cacheName = cacheName;
     }
 
-    private static class NullCacheEntryEventFilter<K, V> implements CacheEntryEventFilter<K, V>, Serializable {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public boolean evaluate(CacheEntryEvent<? extends K, ? extends V> event) throws CacheEntryListenerException {
-            return true;
-        }
+    public String getCacheName() {
+        return cacheName;
     }
 
-    @Inject
-    CacheManager cacheManager;
-
-    @PostConstruct
-    void configure() {
-        MutableConfiguration<Object, Object> config = config("my-cache");
-        boolean isNew = (config == null);
-        if (config == null)
-            config = new MutableConfiguration<>();
-        config.setExpiryPolicyFactory(ModifiedExpiryPolicy.factoryOf(new Duration(MILLISECONDS, 1000)));
-        config.setStatisticsEnabled(true);
-        config.addCacheEntryListenerConfiguration(listenerConfig());
-        if (isNew)
-            cacheManager.createCache("my-cache", config);
+    public CompleteConfiguration<K, V> getConfig() {
+        return config;
     }
 
-    @SuppressWarnings({ "resource", "unchecked" })
-    private MutableConfiguration<Object, Object> config(String cacheName) {
-        Cache<Object, Object> cache = cacheManager.getCache(cacheName);
-        if (cache != null)
-            return cache.getConfiguration(MutableConfiguration.class);
-        return null;
+    /* ----------------------- delegate methods ----------------------- */
+    public MutableConfiguration<K, V> setTypes(Class<K> keyType, Class<V> valueType) {
+        return config.setTypes(keyType, valueType);
     }
 
-    private MutableCacheEntryListenerConfiguration<Object, Object> listenerConfig() {
-        return new MutableCacheEntryListenerConfiguration<>(
-                FactoryBuilder.factoryOf(new SerializableCacheEntryListener<>()),
-                FactoryBuilder.factoryOf(new NullCacheEntryEventFilter<>()), false, false);
+    public MutableConfiguration<K, V> addCacheEntryListenerConfiguration(
+            CacheEntryListenerConfiguration<K, V> cacheEntryListenerConfiguration) {
+        return config.addCacheEntryListenerConfiguration(cacheEntryListenerConfiguration);
+    }
+
+    public MutableConfiguration<K, V> removeCacheEntryListenerConfiguration(
+            CacheEntryListenerConfiguration<K, V> cacheEntryListenerConfiguration) {
+        return config.removeCacheEntryListenerConfiguration(cacheEntryListenerConfiguration);
+    }
+
+    public MutableConfiguration<K, V> setCacheLoaderFactory(Factory<? extends CacheLoader<K, V>> factory) {
+        return config.setCacheLoaderFactory(factory);
+    }
+
+    public MutableConfiguration<K, V> setCacheWriterFactory(Factory<? extends CacheWriter<? super K, ? super V>> factory) {
+        return config.setCacheWriterFactory(factory);
+    }
+
+    public MutableConfiguration<K, V> setExpiryPolicyFactory(Factory<? extends ExpiryPolicy> factory) {
+        return config.setExpiryPolicyFactory(factory);
+    }
+
+    public MutableConfiguration<K, V> setReadThrough(boolean isReadThrough) {
+        return config.setReadThrough(isReadThrough);
+    }
+
+    public MutableConfiguration<K, V> setWriteThrough(boolean isWriteThrough) {
+        return config.setWriteThrough(isWriteThrough);
+    }
+
+    public MutableConfiguration<K, V> setStoreByValue(boolean isStoreByValue) {
+        return config.setStoreByValue(isStoreByValue);
+    }
+
+    public MutableConfiguration<K, V> setStatisticsEnabled(boolean enabled) {
+        return config.setStatisticsEnabled(enabled);
+    }
+
+    public MutableConfiguration<K, V> setManagementEnabled(boolean enabled) {
+        return config.setManagementEnabled(enabled);
     }
 }
