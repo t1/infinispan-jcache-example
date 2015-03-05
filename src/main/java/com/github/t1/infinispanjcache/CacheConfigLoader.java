@@ -18,7 +18,7 @@ public class CacheConfigLoader {
     @PostConstruct
     void configure() {
         for (CacheConfig<?, ?> config : configs) {
-            cacheManager.createCache(config.getCacheName(), config);
+            cacheManager.createCache(config.getCacheName(), config.getConfiguration());
         }
     }
 }

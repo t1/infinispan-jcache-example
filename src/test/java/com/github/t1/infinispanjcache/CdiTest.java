@@ -44,7 +44,7 @@ public class CdiTest {
         ExpiryPolicy expiryPolicy = config.getExpiryPolicyFactory().create();
 
         assertEquals(new Duration(MILLISECONDS, 1000), expiryPolicy.getExpiryForCreation());
-        assertEquals(null, expiryPolicy.getExpiryForAccess());
+        assertEquals(new Duration(MILLISECONDS, 1000), expiryPolicy.getExpiryForAccess());
         assertEquals(new Duration(MILLISECONDS, 1000), expiryPolicy.getExpiryForUpdate());
     }
 
