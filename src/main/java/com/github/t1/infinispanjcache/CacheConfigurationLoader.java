@@ -8,16 +8,16 @@ import javax.inject.Inject;
 
 @Startup
 @Singleton
-public class CacheConfigLoader {
+public class CacheConfigurationLoader {
     @Inject
     CacheManager cacheManager;
 
     @Inject
-    Instance<CacheConfig<?, ?>> configs;
+    Instance<CacheConfiguration<?, ?>> configs;
 
     @PostConstruct
     void configure() {
-        for (CacheConfig<?, ?> config : configs) {
+        for (CacheConfiguration<?, ?> config : configs) {
             cacheManager.createCache(config.getCacheName(), config.getConfiguration());
         }
     }

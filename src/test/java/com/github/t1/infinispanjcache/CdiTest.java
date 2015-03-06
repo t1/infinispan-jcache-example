@@ -18,11 +18,11 @@ import com.github.t1.log.LoggingInterceptor;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses({ CacheResultInterceptor.class, DefaultCacheResolver.class, CacheKeyInvocationContextFactory.class,
-        CacheConfigLoader.class, CacheManagerProducer.class, LoggingInterceptor.class, MyCacheConfig.class })
+        CacheConfigurationLoader.class, CacheManagerProducer.class, LoggingInterceptor.class, MyCacheConfig.class })
 @AdditionalPackages({ AdvancedCacheProducer.class })
 public class CdiTest {
     @Inject
-    CacheConfigLoader configLoader; // startup
+    CacheConfigurationLoader configLoader; // startup
 
     @Inject
     TestResource resource;

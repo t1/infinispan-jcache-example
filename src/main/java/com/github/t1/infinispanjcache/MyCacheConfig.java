@@ -13,7 +13,6 @@ import org.slf4j.*;
 public class MyCacheConfig {
     private static class MyCacheEntryListener<K, V> implements CacheEntryExpiredListener<K, V>, Serializable {
         private static final long serialVersionUID = 1L;
-
         private static final Logger log = LoggerFactory.getLogger(MyCacheEntryListener.class);
 
         @Override
@@ -25,10 +24,10 @@ public class MyCacheConfig {
     }
 
     @Produces
-    public CacheConfig<Object, Object> produceCacheConfig() {
-        return new CacheConfig<>("my-cache") //
+    public CacheConfiguration<Object, Object> produceCacheConfig() {
+        return new CacheConfiguration<>("my-cache") //
                 .expireWhenNotTouchedFor(1000, MILLISECONDS) //
-                .setStatisticsEnabled(true) //
+                .enableStatistics() //
                 .addCacheEntryListener(factoryOf(new MyCacheEntryListener<>()));
     }
 }
