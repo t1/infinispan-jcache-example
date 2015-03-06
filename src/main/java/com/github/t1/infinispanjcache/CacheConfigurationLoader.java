@@ -3,7 +3,7 @@ package com.github.t1.infinispanjcache;
 import javax.annotation.PostConstruct;
 import javax.cache.CacheManager;
 import javax.ejb.*;
-import javax.enterprise.inject.Instance;
+import javax.enterprise.inject.*;
 import javax.inject.Inject;
 
 @Startup
@@ -13,6 +13,7 @@ public class CacheConfigurationLoader {
     CacheManager cacheManager;
 
     @Inject
+    @Any
     Instance<CacheConfiguration<?, ?>> configs;
 
     @PostConstruct

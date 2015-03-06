@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import javax.cache.event.*;
 import javax.enterprise.inject.Produces;
+import javax.inject.Named;
 
 import org.slf4j.*;
 
@@ -24,6 +25,7 @@ public class MyCacheConfig {
     }
 
     @Produces
+    @Named("my-cache")
     public CacheConfiguration<Object, Object> produceCacheConfig() {
         return new CacheConfiguration<>("my-cache") //
                 .expireWhenNotTouchedFor(1000, MILLISECONDS) //
