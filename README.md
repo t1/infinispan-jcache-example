@@ -38,3 +38,5 @@ Info:
 
 :reload
 ```
+
+For details see e.g. [JBoss7 Model Reference](http://wildscribe.github.io/JBoss%20AS7/7.1.1/subsystem/infinispan/cache-container/index.html)
