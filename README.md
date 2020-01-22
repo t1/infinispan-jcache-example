@@ -1,3 +1,7 @@
+# !!!ARCHIVED!!!
+
+This project is archived, as it doesn't work any more with current releases of Wildfly and I won't find the time to update it (I didn't find it trivial).
+
 # JCache Example using Infinispan
 
 Example using the `CacheResult` annotation from [JCache](https://jcp.org/en/jsr/detail?id=107) bound to the implementation from [Infinispan](http://infinispan.org) and _configure it_.
