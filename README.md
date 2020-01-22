@@ -1,6 +1,6 @@
 # !!!ARCHIVED!!!
 
-This project is archived, as it doesn't work any more with current releases of Wildfly and I won't find the time to update it (I didn't find it trivial).
+This project is archived, as it has a vulnerable dependency, doesn't work with current releases of Wildfly any more, and I won't find the time to update it (I didn't find it trivial).
 
 # JCache Example using Infinispan
 
